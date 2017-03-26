@@ -1,3 +1,3 @@
 # stunnel
 
-Dockerfile to build an stunnel Docker container.
+Dockerfile to build an stunnel docker container.
