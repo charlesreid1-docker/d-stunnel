@@ -38,12 +38,25 @@ $ sudo chmod 600 /hom/ezappa/docker/stunnel/*.pem
 
 The Dockerfile will copy these two .pem files into the Docker container when it is being built.
 
-## Docker Conatiner Test
+## Docker Container Test
 
-Now, stunnel is supposed to start automatically when the container is created, but we can test if the Docker container and the stunnel command actually worked by starting a bash shell.
+Now, stunnel is supposed to start automatically when the container is created, but we can test if the Docker container and the stunnel command actually worked by starting a bash shell. When you get the shell, run the stunnel command.
 
 ```plain
 $ docker run -ti cmr_stunnel /bin/bash
+root@c9b9b1f0ce80:/# stunnel
+stunnel: LOG5[ui]: stunnel 5.30 on x86_64-pc-linux-gnu platform
+stunnel: LOG5[ui]: Compiled with OpenSSL 1.0.2e 3 Dec 2015
+stunnel: LOG5[ui]: Running  with OpenSSL 1.0.2g  1 Mar 2016
+stunnel: LOG5[ui]: Update OpenSSL shared libraries or rebuild stunnel
+stunnel: LOG5[ui]: Threading:PTHREAD Sockets:POLL,IPv6,SYSTEMD TLS:ENGINE,FIPS,OCSP,PSK,SNI Auth:LIBWRAP
+stunnel: LOG5[ui]: Reading configuration from file /etc/stunnel/stunnel.conf
+stunnel: LOG5[ui]: UTF-8 byte order mark not detected
+stunnel: LOG5[ui]: FIPS mode disabled
+stunnel: LOG4[ui]: Insecure file permissions on /etc/stunnel/stunnel.key.pem
+stunnel: LOG4[ui]: Service [http] needs authentication to prevent MITM attacks
+stunnel: LOG5[ui]: Configuration successful
+root@c9b9b1f0ce80:/#
 ```
 
 

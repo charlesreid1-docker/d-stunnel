@@ -9,6 +9,7 @@ ADD privkey.pem /etc/stunnel/stunnel.key.pem
 
 RUN apt-get update
 RUN apt-get -y install stunnel
+RUN apt-get -y install net-tools
 
 CMD ["stunnel"]
 
