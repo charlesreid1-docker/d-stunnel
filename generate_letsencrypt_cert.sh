@@ -3,6 +3,8 @@
 # Generate you some certificates
 # from Lets Encrypt
 #
+# This will go into /etc/letsencrypt/keys
+#
 # https://charlesreid1.com/wiki/LetsEncrypt
 
 export WEBROOT="/var/www/html"
