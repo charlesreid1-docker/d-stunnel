@@ -1,2 +1,5 @@
 # yikes.
 *.pem
+
+# use examples, or use your own
+stunnel.conf
