@@ -2,7 +2,23 @@
 
 Dockerfile to build an stunnel docker container.
 
-## Lets Encrypt
+## Stunnel Certificate
+
+### Creating Self-Signed Certificate
+
+The `generate_cert.sh` script will run the commands required to generate a self-signed certificate.
+This is not signed by any certificate authority and will usually cause big red errors on modern browsers.
+
+```plain
+$ ./generate_cert.sh
+```
+
+This will result in a private key `key.pem` and a server certificate `cert.pem`,
+which are both concatenated into `stunnel.pem`. 
+
+Let's Encrypt provides a free certificate authority signing service, so that's a better way to go.
+
+### Creating Certificate with Lets Encrypt
 
 Let's Encrypt provides you with an SSL certificate that is signed by 
 a nonprofit certificate authority, so it is free for everyone.
@@ -26,7 +42,7 @@ We will use the following two keys (descriptions from README):
 `fullchain.pem`: the certificate file used in most server software.
 ```
 
-## Lets Encrypt to Docker Container
+### Lets Encrypt to Docker Container
 
 Copy these to the directory where you will be spawning the Docker containers. We make copies because the Let's Encrypt keys are owned by root and we want to keep them that way, and also we want a portable key solution.
 
@@ -38,7 +54,41 @@ $ sudo chmod 600 /hom/ezappa/docker/stunnel/*.pem
 
 The Dockerfile will copy these two .pem files into the Docker container when it is being built.
 
-## Docker Container Test
+
+
+## Stunnel Configuration Files
+
+Several stunnel configuation files available, client and server files provided to make Docker easy to set up on either end.
+
+These config files work independent of Docker:
+
+```
+stunnel.client.http_over_8000.conf
+stunnel.server.http_over_8000.conf
+
+stunnel.client.ssh_over_443.conf
+stunnel.server.ssh_over_443.conf
+```
+
+See [Stunnel/HTTPS](https://charlesreid1.com/wiki/Stunnel/HTTPS), 
+[Stunnel/Client](https://charlesreid1.com/wiki/Stunnel/Client), and 
+[Stunnel/Server](https://charlesreid1.com/wiki/Stunnel/Server) for details about how to run stunnel and configure it.
+
+These config files are known configurations that work but are just examples. 
+Copy your final stunnel config file to `stunnel.conf` before running the stunnel Docker container.
+
+
+## Running Stunnel Docker Container
+
+You can run the stunnel Docker container by editing the `run.sh` script, verifying it is ok, and running:
+
+```plain
+$ ./run.sh
+```
+
+This will start the container and give you a bash shell in the container machine.
+
+### Docker Container Test
 
 Now, stunnel is supposed to start automatically when the container is created, but we can test if the Docker container and the stunnel command actually worked by starting a bash shell. When you get the shell, run the stunnel command.
 

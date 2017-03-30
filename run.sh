@@ -1,6 +1,7 @@
 #!/bin/sh
 # 
 # Run the docker container
+# 
 
 docker run \
 	--network=host \
