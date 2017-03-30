@@ -109,7 +109,13 @@ stunnel: LOG5[ui]: Configuration successful
 root@c9b9b1f0ce80:/#
 ```
 
+## TODO
 
+networking, -p 443:443
+
+127.0.0.1, not localhost
+
+try replicating apache over 8000, using docker httpd and docker stunnel
 
 
 
