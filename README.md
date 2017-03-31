@@ -109,11 +109,13 @@ stunnel: LOG5[ui]: Configuration successful
 root@c9b9b1f0ce80:/#
 ```
 
-## Binding Stunnel Server Listening Port 
+## Networking
+
+### Binding Stunnel Server Listening Port 
 
 See [this very nice guide to Docker container networking](https://www.ctl.io/developers/blog/post/docker-networking-rules/).
 
-In essence, we want to bind a host port to a container port using the `-p` flag.
+In essence, we want to bind a host port to a container port using the `-p` flag with the docker run command:
 
 The syntax is
 
@@ -121,29 +123,44 @@ The syntax is
 -p <host port>:<container port>
 ```
 
-### Example
+If you're forwarding SSH traffic over port 443, for example, you'll want to add the following to the docker run command:
 
-Suppose the stunnel server is listening for stunnel client connections on port 443.
+```plain
+-p 443:443 -p 22:22
+```
 
-Then we can map the container's port 443 to the host's port 443, 
-and the container will now be listening on the host's external port 443.
+That way, incoming traffic on 443 can come in, and outgoing forwarded traffic on 22 can get out.
+
+
+### Sharing Network Interface
+
+The other key piece of networking with stunnel in a Docker container is for the container to share the network interface of the host,
+to prevent the host from needing a dedicated listener to Docker's ports. 
+
+Do this by adding the following flag to the docker run command:
+
+```plain
+	--network=host \
+```
+
+
+## Final Run Script
+
+Here is the run script to run the docker container `cmr_stunnel` with the configuration mentioned above (server listening on 443, forwarding SSH traffic to port 22):
+
+```
+#!/bin/sh
+#
+# Run the docker container
+#
+# http://charlesreid1.com/wiki/Docker/Basics
+
+docker run \
+	--network=host \
+	-p 443:443 -p 22:22 \
+	-ti cmr_stunnel \
+	/bin/bash
+```
 
 `docker port` will only display ports bound to the host while the container is running.
-
-
-
-## TODO
-
-networking, -p 443:443
-
-127.0.0.1, not localhost
-
-try replicating apache over 8000, using docker httpd and docker stunnel
-
-
-
-
-
-
-
 
