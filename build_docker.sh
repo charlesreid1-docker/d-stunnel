@@ -14,6 +14,6 @@ else
 	echo "Missing one of the following:"
 	echo "stunnel.conf, fullchain.pem, privkey.pem"
 	echo ""
-	echo "Copy an examkple stunel configuration file, or use your own."
+	echo "Copy an example stunel configuration file, or use your own."
 	echo "Check /etc/letsencrypt/live/domain.com/ or /etc/ssl/ for certificates."
 fi
