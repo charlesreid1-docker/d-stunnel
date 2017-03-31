@@ -109,6 +109,29 @@ stunnel: LOG5[ui]: Configuration successful
 root@c9b9b1f0ce80:/#
 ```
 
+## Binding Stunnel Server Listening Port 
+
+See [this very nice guide to Docker container networking](https://www.ctl.io/developers/blog/post/docker-networking-rules/).
+
+In essence, we want to bind a host port to a container port using the `-p` flag.
+
+The syntax is
+
+```plain
+-p <host port>:<container port>
+```
+
+### Example
+
+Suppose the stunnel server is listening for stunnel client connections on port 443.
+
+Then we can map the container's port 443 to the host's port 443, 
+and the container will now be listening on the host's external port 443.
+
+`docker port` will only display ports bound to the host while the container is running.
+
+
+
 ## TODO
 
 networking, -p 443:443
