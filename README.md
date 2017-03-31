@@ -164,3 +164,19 @@ docker run \
 
 `docker port` will only display ports bound to the host while the container is running.
 
+Note that you may or may not need to SSH as root, depending. Make sure you try both.
+
+
+
+## More Examples
+
+Also see the charlesreid1.com wiki:
+
+[Stunnel/SSH](https://charlesreid1.com/wiki/Stunnel/SSH)
+
+[Stunnel/Scp](https://charlesreid1.com/wiki/Stunnel/Scp)
+
+[Stunnel/HTTP](https://charlesreid1.com/wiki/Stunnel/HTTP)
+
+
+
