@@ -6,7 +6,7 @@
 
 docker run \
 	--network=host \
-	-p 443:443 -p 22:22 \
+	-p 273:273 -p 873:873 \
 	-ti cmr_stunnel \
 	/bin/bash
 
