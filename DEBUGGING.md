@@ -239,3 +239,68 @@ Fixed by removing the hosts allow line:
 
 hat tip to the [rsync mailing list](https://lists.samba.org/archive/rsync/2006-December/016869.html).
 
+Sucess:
+
+```plain
+[client] $ ./rsync_with_server.sh
+opening tcp connection to localhost port 873
+sending daemon args: --server -vvlogDtprRe.iLsfxC . pi/  (4 args)
+sending incremental file list
+Setting --timeout=600 to match server
+/Users/
+/Users/charles/
+/Users/charles/wifi/
+/Users/charles/wifi/file1
+/Users/charles/wifi/file2
+total: matches=0  hash_hits=0  false_alarms=0 data=26
+
+
+ 11
+
+sent 277 bytes  received 78 bytes  710.00 bytes/sec
+total size is 26  speedup is 0.07
+```
+
+On the server syslog:
+
+```plain
+Apr  1 06:45:59 localhost rsyncd[6371]: connect from localhost (127.0.0.1)
+Apr  1 06:45:59 localhost rsyncd[6371]: rsync to pi/ from localhost (127.0.0.1)
+Apr  1 06:45:59 localhost rsyncd[6371]: receiving file list
+Apr  1 06:45:59 localhost rsyncd[6371]: Users/charles/
+Apr  1 06:45:59 localhost rsyncd[6371]: sent 35 bytes  received 176 bytes  total size 26
+```
+
+## one mo time
+
+On the client:
+
+```plain
+[client] $ ./rsync_with_server.sh
+opening tcp connection to localhost port 873
+sending daemon args: --server -vvlogDtpre.iLsfxC . pi/  (4 args)
+sending incremental file list
+Setting --timeout=600 to match server
+./
+file3
+file4
+file5
+total: matches=0  hash_hits=0  false_alarms=0 data=37
+
+sent 289 bytes  received 84 bytes  746.00 bytes/sec
+total size is 63  speedup is 0.17
+```
+
+On the server:
+
+```plain
+[remote] $ tail -f /var/log/syslog
+Apr  1 06:54:05 localhost rsyncd[7032]: connect from localhost (::1)
+Apr  1 06:54:05 localhost rsyncd[7032]: rsync to pi/ from localhost (::1)
+Apr  1 06:54:05 localhost rsyncd[7032]: receiving file list
+Apr  1 06:54:05 localhost rsyncd[7032]: ./
+Apr  1 06:54:05 localhost rsyncd[7032]: sent 89 bytes  received 310 bytes  total size 63
+```
+
+
+
