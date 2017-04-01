@@ -109,18 +109,74 @@ stunnel: LOG5[ui]: Configuration successful
 root@c9b9b1f0ce80:/#
 ```
 
-## TODO
+## Networking
 
-networking, -p 443:443
+### Binding Stunnel Server Listening Port 
 
-127.0.0.1, not localhost
+See [this very nice guide to Docker container networking](https://www.ctl.io/developers/blog/post/docker-networking-rules/).
 
-try replicating apache over 8000, using docker httpd and docker stunnel
+In essence, we want to bind a host port to a container port using the `-p` flag with the docker run command:
+
+The syntax is
+
+```plain
+-p <host port>:<container port>
+```
+
+If you're forwarding SSH traffic over port 443, for example, you'll want to add the following to the docker run command:
+
+```plain
+-p 443:443 -p 22:22
+```
+
+That way, incoming traffic on 443 can come in, and outgoing forwarded traffic on 22 can get out.
+
+
+### Sharing Network Interface
+
+The other key piece of networking with stunnel in a Docker container is for the container to share the network interface of the host,
+to prevent the host from needing a dedicated listener to Docker's ports. 
+
+Do this by adding the following flag to the docker run command:
+
+```plain
+	--network=host \
+```
+
+
+## Final Run Script
+
+Here is the run script to run the docker container `cmr_stunnel` with the configuration mentioned above (server listening on 443, forwarding SSH traffic to port 22):
+
+```
+#!/bin/sh
+#
+# Run the docker container
+#
+# http://charlesreid1.com/wiki/Docker/Basics
+
+docker run \
+	--network=host \
+	-p 443:443 -p 22:22 \
+	-ti cmr_stunnel \
+	/bin/bash
+```
+
+`docker port` will only display ports bound to the host while the container is running.
+
+Note that you may or may not need to SSH as root, depending. Make sure you try both.
 
 
 
+## More Examples
 
+Also see the charlesreid1.com wiki:
 
+[Stunnel/SSH](https://charlesreid1.com/wiki/Stunnel/SSH)
+
+[Stunnel/Scp](https://charlesreid1.com/wiki/Stunnel/Scp)
+
+[Stunnel/HTTP](https://charlesreid1.com/wiki/Stunnel/HTTP)
 
 
 
