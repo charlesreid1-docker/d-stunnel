@@ -175,3 +175,67 @@ stunnel: LOG7[1]: Service [rsync] finished (0 left)
 2017.04.01 06:25:32 LOG7[1]: Service [rsync] finished (0 left)
 ```
 
+## Permissions problems
+
+Was running into a permissions problem when trying to sync actual files:
+
+```plain
+[client] $ ./rsync_with_server.sh
+opening tcp connection to localhost port 873
+sending daemon args: --server -vvlogDtprRe.iLsfxC . pi/  (4 args)
+@ERROR: access denied to pi from localhost (::1)
+rsync error: error starting client-server protocol (code 5) at main.c(1719) [sender=3.1.2]
+```
+
+On the server:
+
+```
+stunnel: LOG5[3]: Service [rsync] connected remote server from ::1:41962
+2017.04.01 06:39:40 LOG5[3]: Service [rsync] connected remote server from ::1:41962
+stunnel: LOG7[3]: Remote descriptor (FD=8) initialized
+2017.04.01 06:39:40 LOG7[3]: Remote descriptor (FD=8) initialized
+stunnel: LOG6[3]: Read socket closed (readsocket)
+2017.04.01 06:39:40 LOG6[3]: Read socket closed (readsocket)
+stunnel: LOG7[3]: Sending close_notify alert
+2017.04.01 06:39:40 LOG7[3]: Sending close_notify alert
+stunnel: LOG7[3]: SSL alert (write): warning: close notify
+2017.04.01 06:39:40 LOG7[3]: SSL alert (write): warning: close notify
+stunnel: LOG6[3]: SSL_shutdown successfully sent close_notify alert
+2017.04.01 06:39:40 LOG6[3]: SSL_shutdown successfully sent close_notify alert
+stunnel: LOG7[3]: SSL alert (read): warning: close notify
+2017.04.01 06:39:41 LOG7[3]: SSL alert (read): warning: close notify
+stunnel: LOG6[3]: SSL closed (SSL_read)
+2017.04.01 06:39:41 LOG6[3]: SSL closed (SSL_read)
+stunnel: LOG7[3]: Sent socket write shutdown
+2017.04.01 06:39:41 LOG7[3]: Sent socket write shutdown
+stunnel: LOG5[3]: Connection closed: 63 byte(s) sent to SSL, 17 byte(s) sent to socket
+2017.04.01 06:39:41 LOG5[3]: Connection closed: 63 byte(s) sent to SSL, 17 byte(s) sent to socket
+stunnel: LOG7[3]: Remote descriptor (FD=8) closed
+2017.04.01 06:39:41 LOG7[3]: Remote descriptor (FD=8) closed
+stunnel: LOG7[3]: Local descriptor (FD=3) closed
+2017.04.01 06:39:41 LOG7[3]: Local descriptor (FD=3) closed
+stunnel: LOG7[3]: Service [rsync] finished (0 left)
+2017.04.01 06:39:41 LOG7[3]: Service [rsync] finished (0 left)
+```
+
+In the syslog:
+
+```
+Apr  1 06:25:32 localhost rsyncd[6112]: connect from localhost (127.0.0.1)
+Apr  1 06:25:32 localhost rsyncd[6112]: module-list request from localhost (127.0.0.1)
+Apr  1 06:35:01 localhost CRON[6130]: (root) CMD (command -v debian-sa1 > /dev/null && debian-sa1 1 1)
+Apr  1 06:39:21 localhost rsyncd[6141]: connect from localhost (::1)
+Apr  1 06:39:21 localhost rsyncd[6141]: rsync denied on module pi from localhost (::1)
+Apr  1 06:39:40 localhost rsyncd[6143]: connect from localhost (::1)
+Apr  1 06:39:40 localhost rsyncd[6143]: rsync denied on module pi from localhost (::1)
+Apr  1 06:41:29 localhost systemd[1]: Started Session 1272 of user z4pp4.
+```
+
+Fixed by removing the hosts allow line:
+
+```plain
+        # hosts allow = 127.0.0.1
+```
+
+hat tip to the [rsync mailing list](https://lists.samba.org/archive/rsync/2006-December/016869.html).
+
