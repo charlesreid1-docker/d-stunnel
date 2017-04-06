@@ -8,7 +8,7 @@ export CERT="fullchain.pem"
 export KEY="privkey.pem"
 export CONF="stunnel.conf"
 
-if [ -f $CERT -a -f $KEY -a $CONF ]; then
+if [ -f $CERT -a -f $KEY -a -f $CONF ]; then
 	docker build -t cmr_stunnel .
 else
 	echo "Missing one of the following:"
