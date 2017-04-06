@@ -1,3 +1,4 @@
+MAINTAINER charles@charlesreid1.com
 FROM ubuntu
 
 RUN mkdir -p /etc/stunnel
