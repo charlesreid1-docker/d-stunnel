@@ -1,5 +1,5 @@
-MAINTAINER charles@charlesreid1.com
 FROM ubuntu
+MAINTAINER charles@charlesreid1.com
 
 RUN mkdir -p /etc/stunnel
 VOLUME ["/etc/stunnel"]
