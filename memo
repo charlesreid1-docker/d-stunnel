@@ -1,7 +1,0 @@
--p 443:443 was key
-
-also, when you SSH to the stunnel server from the stunnel client,
-if you run stunnel as root you have to ssh as root:
-ssh root@localhost
-don't ssh as a normal user on the server.
-
