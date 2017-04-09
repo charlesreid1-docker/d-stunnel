@@ -28,13 +28,17 @@ else
 
 	CERT="fullchain.pem"
 	KEY="privkey.pem"
+
 	CONF="stunnel.conf"
 	THIS_CONF="stunnel.server.ssh.conf"
 
+	STARTSCRIPT="start_ssh_stunnel.sh"
+	DOCKERFILE="Dockerfile_ssh_stunnel"
 
 	if [ -f $CERT -a -f $KEY -a -f $THIS_CONF ]; then
-		$SED "s/PORT/${1}/g" ${CONF} > ${CONF}
-		docker build -f Dockerfile_ssh_stunnel -t cmr_stunnel_ssh .
+		$SED "s/PORT/${1}/g" ${THIS_CONF} > ${CONF}
+		$SED -i "s/EXPOSE [0-9]\{1,5\}/EXPOSE ${1}/g" ${DOCKERFILE}
+		docker build -f ${DOCKERFILE} -t cmr_stunnel_ssh .
 
 	else
 		echo "ssh stunnel docker container build script:"

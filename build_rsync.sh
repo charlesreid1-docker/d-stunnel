@@ -28,14 +28,18 @@ else
 
 	CERT="fullchain.pem"
 	KEY="privkey.pem"
+
 	CONF="stunnel.conf"
 	THIS_CONF="stunnel.server.rsync.conf"
 
+	STARTSCRIPT="start_rsync_stunnel.sh"
+	DOCKERFILE="Dockerfile_rsync_stunnel"
 
 	if [ -f $CERT -a -f $KEY -a -f $THIS_CONF ]; then
 		$SED "s/PORT/${1}/g" ${CONF} > ${CONF}
-		$SED -i "s/ssyncd [0-9]\{1,5\}/ssyncd ${1}/g" start_rsync_stunnel.sh
-		docker build -f Dockerfile_rsync_stunnel -t cmr_stunnel_rsync .
+		$SED -i "s/ssyncd [0-9]\{1,5\}/ssyncd ${1}/g" ${STARTSCRIPT}
+		$SED -i "s/EXPOSE [0-9]\{1,5\}/EXPOSE ${1}/g" ${DOCKERFILE}
+		docker build -f ${DOCKERFILE} -t cmr_stunnel_rsync .
 
 	else
 		echo "rsync stunnel docker container build script:"

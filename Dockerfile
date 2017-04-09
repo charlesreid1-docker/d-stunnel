@@ -13,10 +13,7 @@ RUN apt-get -y install stunnel
 RUN apt-get -y install net-tools
 RUN chmod 600 /etc/stunnel/stunnel.fullchain.pem
 RUN chmod 600 /etc/stunnel/stunnel.key.pem
-############ 
-# Add if we are doing rsync. port should be stunnel port.
-#RUN echo "ssyncd 443/tcp # secure rsync over stunnel" >> /etc/services
-############ 
 
-CMD ["/usr/bin/stunnel"]
+####CMD ["/usr/bin/stunnel"," && ","tail -f /dev/null"]
+CMD ["/usr/bin/stunnel ; tail -f /dev/null"]
 

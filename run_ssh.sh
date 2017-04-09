@@ -21,6 +21,8 @@ then
 	usage
 else
 
+	echo "Running ssh stunnel docker container on port ${1}"
+
 	docker run \
 		--network=host \
 		-p ${1}:${1} -p 22:22 \
