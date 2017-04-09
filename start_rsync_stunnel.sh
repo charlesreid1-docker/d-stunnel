@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "ssyncd 273/tcp" >> /etc/services
+echo "ssyncd 443/tcp" >> /etc/services
 
 /usr/bin/stunnel
 

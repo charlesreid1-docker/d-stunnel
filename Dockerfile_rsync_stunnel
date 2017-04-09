@@ -1,7 +1,7 @@
 FROM ubuntu
 MAINTAINER charles@charlesreid1.com
 
-EXPOSE 273
+EXPOSE 443
 
 RUN mkdir -p /etc/stunnel
 VOLUME ["/etc/stunnel"]
