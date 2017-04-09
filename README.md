@@ -2,6 +2,9 @@
 
 Dockerfile to build an stunnel docker container.
 
+You can edit the Dockerfile and use it to create the docker container,
+or you can use one of the template Dockerfiles.
+
 ## Stunnel Certificate
 
 ### Creating Self-Signed Certificate
