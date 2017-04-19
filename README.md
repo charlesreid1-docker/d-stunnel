@@ -1,4 +1,4 @@
-# stunnel
+# d-stunnel
 
 Dockerfile to build an stunnel docker container.
 
