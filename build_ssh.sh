@@ -15,7 +15,7 @@ function usage {
 	echo ""
 	echo "build_ssh.sh script:"
 	echo "builds an ssh stunnel docker container."
-	echo "specify a port number for the ssh stunnel server to use:"
+	echo "specify a port number for the stunnel server to use:"
 	echo ""
 	echo "        ./build_ssh.sh 666"
 	echo ""
@@ -32,8 +32,8 @@ else
 	CONF="stunnel.conf"
 	THIS_CONF="stunnel.server.ssh.conf"
 
-	STARTSCRIPT="start_ssh_stunnel.sh"
-	DOCKERFILE="Dockerfile_ssh_stunnel"
+	STARTSCRIPT="start_stunnel.sh"
+	DOCKERFILE="Dockerfile"
 
 	if [ -f $CERT -a -f $KEY -a -f $THIS_CONF ]; then
 		$SED "s/PORT/${1}/g" ${THIS_CONF} > ${CONF}

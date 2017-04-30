@@ -15,7 +15,7 @@ function usage {
 	echo ""
 	echo "build_rsync.sh script:"
 	echo "builds an rsync stunnel docker container."
-	echo "specify a port number for the rsync stunnel server to use:"
+	echo "specify a port number for the stunnel server to use:"
 	echo ""
 	echo "        ./build_rsync.sh 666"
 	echo ""
@@ -32,8 +32,8 @@ else
 	CONF="stunnel.conf"
 	THIS_CONF="stunnel.server.rsync.conf"
 
-	STARTSCRIPT="start_rsync_stunnel.sh"
-	DOCKERFILE="Dockerfile_rsync_stunnel"
+	STARTSCRIPT="start_stunnel.sh"
+	DOCKERFILE="Dockerfile"
 
 	if [ -f $CERT -a -f $KEY -a -f $THIS_CONF ]; then
 		$SED "s/PORT/${1}/g" ${THIS_CONF} > ${CONF}
