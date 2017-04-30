@@ -35,8 +35,6 @@ Note that nmap does not seem to be a consistent way of finding whether
 the port has been successfully mapped. Even if the port 
 does not show up as open on an nmap scan, you may still be able to poke it remotely.
 
-(Now to test out whether stunnel works with negative nmap scans.)
-
 # Rsync
 
 Followed all instructions, but getting this error:
@@ -237,7 +235,7 @@ Fixed by removing the hosts allow line:
         # hosts allow = 127.0.0.1
 ```
 
-hat tip to the [rsync mailing list](https://lists.samba.org/archive/rsync/2006-December/016869.html).
+Hat tip to the [rsync mailing list](https://lists.samba.org/archive/rsync/2006-December/016869.html).
 
 Sucess:
 
@@ -301,6 +299,4 @@ Apr  1 06:54:05 localhost rsyncd[7032]: receiving file list
 Apr  1 06:54:05 localhost rsyncd[7032]: ./
 Apr  1 06:54:05 localhost rsyncd[7032]: sent 89 bytes  received 310 bytes  total size 63
 ```
-
-
 

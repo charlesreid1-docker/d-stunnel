@@ -5,7 +5,24 @@ Dockerfile to build an stunnel docker container.
 You can edit the Dockerfile and use it to create the docker container,
 or you can use one of the template Dockerfiles.
 
-## Stunnel Certificate
+## TL;DR
+
+Run `make x` to make a docker container that runs service x.
+
+The repo has several pre-configured stunnel configurations:
+* rsync
+* ssh
+
+To create a Docker container to run service x, add the following:
+* Makefile rule to build service x
+* `build_x.sh` script 
+* `run_x.sh` script
+* `Dockerfile_x_stunnel` Dockerfile to build the container
+* `start_x_stunnel.sh` script (used by the Docker container)
+
+Then do the following:
+
+## Stunnel Setup: Certificates
 
 ### Creating Self-Signed Certificate
 
@@ -45,17 +62,19 @@ We will use the following two keys (descriptions from README):
 `fullchain.pem`: the certificate file used in most server software.
 ```
 
-### Lets Encrypt to Docker Container
+### Getting Certificates into Docker Container
 
-Copy these to the directory where you will be spawning the Docker containers. We make copies because the Let's Encrypt keys are owned by root and we want to keep them that way, and also we want a portable key solution.
+Copy these to the directory where you will be spawning the Docker containers. 
+We make copies because the Let's Encrypt keys are owned by root and we want to keep them that way, 
+but we also want a portable key solution.
 
 ```plain
 $ sudo cp /etc/letsencrypt/live/domain.com/{privkey.pem,fullchain.pem} /home/zappa/docker/stunnel/.
 $ sudo chown zappa:zappa /home/zappa/docker/stunnel/*.pem
-$ sudo chmod 600 /hom/ezappa/docker/stunnel/*.pem
+$ sudo chmod 600 /home/zappa/docker/stunnel/*.pem
 ```
 
-The Dockerfile will copy these two .pem files into the Docker container when it is being built.
+The Dockerfile is configured to copy these two .pem files into the Docker container when it is being built.
 
 
 
@@ -81,11 +100,13 @@ These config files are known configurations that work but are just examples.
 Copy your final stunnel config file to `stunnel.conf` before running the stunnel Docker container.
 
 
+
+
 ## Running Stunnel Docker Container
 
 You can run the stunnel Docker container by editing the `run.sh` script, verifying it is ok, and running:
 
-```plain
+```
 $ ./run.sh
 ```
 
@@ -93,7 +114,10 @@ This will start the container and give you a bash shell in the container machine
 
 ### Docker Container Test
 
-Now, stunnel is supposed to start automatically when the container is created, but we can test if the Docker container and the stunnel command actually worked by starting a bash shell. When you get the shell, run the stunnel command.
+Now, stunnel is supposed to start automatically when the container is created.
+We can test if the Docker container and the stunnel command actually worked 
+by starting a bash shell in the docker container. When you get the shell, 
+run the stunnel command.
 
 ```plain
 $ docker run -ti cmr_stunnel /bin/bash
@@ -111,6 +135,8 @@ stunnel: LOG4[ui]: Service [http] needs authentication to prevent MITM attacks
 stunnel: LOG5[ui]: Configuration successful
 root@c9b9b1f0ce80:/#
 ```
+
+
 
 ## Networking
 
